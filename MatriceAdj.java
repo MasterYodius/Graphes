@@ -76,30 +76,59 @@ public class MatriceAdj {
 	
 	
 	public void afficheM() {
+		System.out.print("      ");
 		for(int i = 0; i<this.nbsommets; i++) {
+		
+		System.out.printf("%4s",i);
+		}
+		System.out.println();
+		
+		System.out.print("      ");
+		for(int i = 0; i<this.nbsommets; i++) {
+		System.out.printf("%4s","——");
+		}
+		System.out.println();
+
+		for(int i = 0; i<this.nbsommets; i++) {
+			System.out.printf("%6s",i + " |");
 			for(int j = 0;j< this.nbsommets;j++) {
-				System.out.print(this.matrice[i][j]+" ");
+				System.out.printf("%4d",this.matrice[i][j]);
 			}
-			System.out.println("");
+			System.out.println();
 		}
 	}
 	
-	public void afficherValeurs() {
+	public void afficherValeurs() {	
+		System.out.print("      ");
 		
+		for(int i = 0; i<this.nbsommets; i++) {
+		System.out.printf("%4s",i);
+		}
+		
+		System.out.println();
+		
+		System.out.print("      ");
+		
+		for(int i = 0; i<this.nbsommets; i++) {
+		System.out.printf("%4s","——");
+		}
+		
+		System.out.println();
 		
 		for(int i = 0; i< this.nbsommets; i++) {
+			System.out.printf("%6s",i+" |");
 			for(int j = 0; j< this.nbsommets; j++) {
 				if(this.getval(i, j) == NULL ) {
-					System.out.print("*  ");
+					System.out.printf("%4s","*");
 					
 				}
 				else {
-					System.out.print(this.getval(i, j)+"  ");
+					System.out.printf("%4d",this.getval(i, j));
 					
 					
 				}
 			}
-			System.out.println("");
+			System.out.println();
 		}
 	}
 
