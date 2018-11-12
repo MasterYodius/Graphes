@@ -1,5 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.security.auth.DestroyFailedException;
@@ -52,6 +56,10 @@ public class Test {
 				verifOrdo(m);
 			}
 		
+		/*if(circuit == false)
+		  	CalculRangs(m); 
+	    */
+		
 		
 		} catch (FileNotFoundException e) { e.printStackTrace(); System.out.println(e.getMessage());
 		}
@@ -69,17 +77,9 @@ public class Test {
 		
 		
 		while(m.getNbSommet() > 0 && res == false) {			//Tant qu'il reste des sommets et des points d'entrée
-			int[] predess = new int[m.getNbSommet()];			//cette boucle sert à avoir le nombre de prédécésseur de chaque sommet pour détécter les points d'entrée
-			for(int colonne = 0; colonne < m.getNbSommet(); colonne++) {
-				int cpt = 0;
-				for(int ligne = 0 ; ligne< m.getNbSommet(); ligne++) {
-					if(m.getArc(ligne, colonne) == 1) {
-						cpt+=1;
-					}
-					predess[colonne] = cpt;
-				}
-				
-			}
+			int[] predess = new int[m.getNbSommet()];			
+			
+			predess = m.getPredecesseurs();
 		
 			for(int v = 0;v<predess.length;v++) {
 				if(predess[v] == 0) {	//si un sommet n'a pas de prédécésseurs
@@ -265,7 +265,7 @@ public class Test {
 		int sommetEntree = 0;
 		boolean res = false;
 		if(unPointDentree(m) == true && verifValIdentique(m) == true) {
-			for(int colonne=0; colonne < m.getNbSommet(); colonne++) {
+			for(int colonne=0; colonne < m.getNbSommet(); colonne++) {		//Cette boucle sert à localiser le point d'entrée
 				for(int ligne=0; ligne < m.getNbSommet(); ligne++) {
 					if(m.getArc(ligne, colonne) == 1) {
 						predess += 1; 
@@ -314,4 +314,44 @@ public class Test {
 		}
 		return res;
 	}
+	
+	
+	public static void CalculRangs (MatriceAdj m) {
+        String resultat = "";
+        HashMap<Integer,Integer> predess = new HashMap<>();
+        ArrayList<Integer> racines = new ArrayList<>();
+        int k=0;
+        
+        
+        for (int i=0; i<m.getNbSommet();i++) {
+            predess.put(i,m.getPredecesseurs()[i] );
+        }
+        
+        while (m.getNbSommet()>k) {
+                Iterator<Map.Entry<Integer,Integer>> it = predess.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<Integer,Integer> entry = it.next();
+                    if (entry.getValue().equals(0)) {
+                       racines.add(entry.getKey());
+                    }
+                }
+                for (int r : racines) {
+                    System.out.print(predess.get(r));
+                      
+                          
+                          resultat+= r+" est de rang "+k+"\n";
+                          for (int j=0; j<m.getNbSommet(); j++) {
+                            if( m.getArc(r, j)==1 ) {
+                                predess.put(r,predess.get(r)-1);
+                            }
+                    }
+                          m=supprimerSommet(m,r);
+                          racines.remove(r);
+                          System.out.println(resultat);
+                  }
+            k=k+1;
+            System.out.print(k);       
+}
+    
+}
 }

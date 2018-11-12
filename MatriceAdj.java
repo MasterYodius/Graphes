@@ -38,7 +38,6 @@ public class MatriceAdj {
 			for(int j = 0; j < this.nbsommets; j++) {
 				
 				this.matrice[i][j] = m1.getArc(i, j);
-				//System.out.println(i +" "+j+" "+this.getArc(i, j)+" ");
 			}
 		}
 		
@@ -134,5 +133,33 @@ public class MatriceAdj {
 			System.out.println();
 		}
 	}
+	
+	public int[] getPredecesseurs() {
+        int[] predess = new int[getNbSommet()];
+		for(int colonne = 0; colonne < getNbSommet(); colonne++) {
+			int cpt = 0;
+			for(int ligne = 0 ; ligne< getNbSommet(); ligne++) {
+				if(getArc(ligne, colonne) == 1) {
+					cpt+=1;
+				}
+				predess[colonne] = cpt;
+			}
+        } 
+        return predess;
+    }
+    
+    public int[] getSuccesseurs() {
+        int[] succ = new int[getNbSommet()];
+		for(int ligne = 0; ligne < getNbSommet(); ligne++) {
+			int cpt = 0;
+			for(int colonne = 0 ; ligne< getNbSommet(); colonne++) {
+				if(getArc(ligne, colonne) == 1) {
+					cpt+=1;
+				}
+				succ[colonne] = cpt;
+			}
+        } 
+        return succ;
+    }
 
 }
